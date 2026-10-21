@@ -21,7 +21,7 @@ if(head==NULL){
 
 }
 
-// once check we can get the head and move it forward
+
 Node* curr = head;
 head = head->next;
 

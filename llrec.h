@@ -84,7 +84,7 @@ Node* llfilter(Node* head, Comp pred)
     // Provide your implementation below
     //*********************************************
 
-// base case for if case is empty
+
     if(head== NULL){
       return NULL;
     }
