@@ -84,6 +84,27 @@ Node* llfilter(Node* head, Comp pred)
     // Provide your implementation below
     //*********************************************
 
+// base case for if case is empty
+    if(head== NULL){
+      return NULL;
+    }
+
+
+    // move the rest prt to the next 
+    Node* rest = llfilter(head->next, pred);
+
+    // we want to remove the node and deallocatwe it 
+// condition to delete
+    if(pred(head->val)){
+      delete head;
+      return rest;
+    }
+
+    // keep the head->next node 
+    head->next = rest;
+    return head;
+
+
 
 }
 

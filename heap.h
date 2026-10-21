@@ -2,6 +2,8 @@
 #define HEAP_H
 #include <functional>
 #include <stdexcept>
+#include <vector>
+#include <utility>
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -61,13 +63,92 @@ public:
 
 private:
   /// Add whatever helper functions and data members you need below
+// trickle up + down fx 
+        void trickleUp(size_t idx);
+        void trickleDown(size_t idx);
 
-
-
+        std::vector<T> data_;
+        int m_;
+        PComparator comp_;
 
 };
 
 // Add implementation of member functions here
+template <typename T, typename PComparator>
+Heap<T, PComparator>::Heap(int m, PComparator c) : m_(m), comp_(c){
+
+}
+
+template <typename T, typename PComparator>
+Heap<T, PComparator>::~Heap(){
+
+}
+
+template <typename T, typename PComparator>
+void Heap<T, PComparator>::push(const T& item){
+  data_.push_back(item);
+  trickleUp(data_.size() - 1);
+}
+
+
+template <typename T, typename PComparator>
+bool Heap<T, PComparator>::empty() const{
+  return data_.empty();
+}
+
+template <typename T, typename PComparator>
+size_t Heap<T, PComparator>::size() const{
+  return data_.size();
+}
+
+template <typename T, typename PComparator>
+void Heap<T, PComparator>::trickleUp(size_t idx){
+  while(idx > 0){
+    size_t parent = (idx - 1) / m_;
+    if(comp_(data_[idx], data_[parent])){
+      std::swap(data_[idx], data_[parent]);
+      idx = parent;
+    }
+    else{
+      break;
+    }
+
+  }
+}
+
+
+template <typename T, typename PComparator>
+void Heap<T, PComparator>::trickleDown(size_t idx){
+
+
+  while(true){ //for leaf node
+    size_t firstChild = m_ * idx + 1;
+    if(firstChild >= data_.size()){
+      break; 
+    }
+    // find whihc is the highest priotity
+  size_t best = firstChild;
+  for(int k = 1; k<m_; k++){
+    size_t child = firstChild + k;
+    
+
+    if (child < data_.size() && comp_(data_[child], data_[best])){
+      best = child;
+    }
+  }
+      if(comp_(data_[best], data_[idx])){
+        std::swap(data_[best], data_[idx]);
+            idx = best;
+
+      }
+      else{
+        break;
+      }
+  }
+}
+
+
+
 
 
 // We will start top() for you to handle the case of 
@@ -81,13 +162,14 @@ T const & Heap<T,PComparator>::top() const
     // ================================
     // throw the appropriate exception
     // ================================
+throw std::underflow_error("Heap is empty");
 
 
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
 
-
+    return data_[0];
 
 }
 
@@ -101,14 +183,16 @@ void Heap<T,PComparator>::pop()
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+      throw std::underflow_error("Heap is empty");
   }
-
-
-
+  /*after the check we need to remove the last space and call trickle down on 
+  the tree*/
+      data_[0] = data_.back();
+      data_.pop_back();
+      if(!data_.empty()){
+        trickleDown(0);
 }
-
+}
 
 
 #endif

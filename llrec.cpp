@@ -5,3 +5,40 @@
 //*********************************************
 
 
+
+// create the linked list 
+// cover the base cases and 
+
+void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot){
+// base case when empty
+
+if(head==NULL){
+  smaller = NULL;
+  larger = NULL;
+  return;
+
+
+
+}
+
+// once check we can get the head and move it forward
+Node* curr = head;
+head = head->next;
+
+//call the functuion again and split
+
+  llpivot(head, smaller, larger, pivot);
+
+
+// follow thru the order
+      if(curr->val <= pivot){
+  curr->next = smaller;
+        smaller = curr;
+
+} else{
+  curr->next = larger;
+  larger = curr;
+}
+
+}
+
