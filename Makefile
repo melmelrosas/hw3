@@ -9,10 +9,10 @@ all: llrec-test
 #-----------------------------------------------------
 
 llrec-test: llrec-test.cpp llrec.o llrec.h
-    $(CXX) $(CXXFLAGS) llrec-test.cpp llrec.o -o llrec-test
+	$(CXX) $(CXXFLAGS) llrec-test.cpp llrec.o -o llrec-test
 
 llrec.o: llrec.cpp llrec.h 
-    $(CXX) $(CXXFLAGS) -c llrec.cpp llrec.o 
+	$(CXX) $(CXXFLAGS) -c llrec.cpp -o llrec.o 
 
 
 
